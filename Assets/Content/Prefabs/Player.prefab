@@ -182,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   scoreCost: 0
-  timeBetweenDamage: 1
+  timeBetweenDamage: 0
   characterTransform: {fileID: 1844336601262839139}
   characterController: {fileID: 3063199199890875964}
 --- !u!114 &7974619796984508891

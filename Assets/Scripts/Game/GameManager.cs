@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = Vector3.zero;
         player.gameObject.SetActive(true);
         player.Initialize();
+        player.LifeComponent.Initialize(player);
         player.LifeComponent.OnCharacterDeath += CharacterDeathHandler;
 
         gameSessionTime = 0;
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
         gameSessionTime += Time.deltaTime;
         timeBetweenEnemySpawn -= Time.deltaTime;
 
+        
         if (timeBetweenEnemySpawn <= 0)
         {
             SpawnEnemy();
@@ -74,6 +77,23 @@ public class GameManager : MonoBehaviour
         if (gameSessionTime >= gameData.SessionTimeSeconds)
         {
             GameVictory();
+        }
+    }
+    private void SpawnEnemy()
+    {
+        Character enemy = characterFactory.GetCharacter(CharacterType.DefaultEnemy);
+        Vector3 playerPosition = characterFactory.Player.transform.position;
+        enemy.transform.position = new Vector3(playerPosition.x + GetOffset(), 0, playerPosition.z + GetOffset());
+        enemy.gameObject.SetActive(true);
+        enemy.Initialize();
+        enemy.LifeComponent.Initialize(enemy);
+        enemy.LifeComponent.OnCharacterDeath += CharacterDeathHandler;
+
+        float GetOffset()
+        {
+            bool isPlus = Random.Range(0, 100) % 2 == 0;
+            float offset = Random.Range(gameData.MinSpawnOffset, gameData.MaxSpawnOffset);
+            return (isPlus) ? offset : (-1 * offset);
         }
     }
 
@@ -103,22 +123,6 @@ public class GameManager : MonoBehaviour
         scoreSystem.EndGame();
     }
 
-    private void SpawnEnemy()
-    {
-        Character enemy = characterFactory.GetCharacter(CharacterType.DefaultEnemy);
-        Vector3 playerPosition = characterFactory.Player.transform.position;
-        enemy.transform.position = new Vector3(playerPosition.x + GetOffset(), 0, playerPosition.z + GetOffset());
-        enemy.gameObject.SetActive(true);
-        enemy.Initialize();
-        enemy.LifeComponent.OnCharacterDeath += CharacterDeathHandler;
-
-        float GetOffset()
-        {
-            bool isPlus = Random.Range(0, 100) % 2 == 0;
-            float offset = Random.Range(gameData.MinSpawnOffset, gameData.MaxSpawnOffset);
-            return (isPlus) ? offset: (-1 * offset);
-        }
-    }
     private void GameOver()
     {
         Debug.Log("You Lost:(");

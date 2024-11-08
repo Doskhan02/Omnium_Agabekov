@@ -6,6 +6,11 @@ public class CharacterDamageComponent : IDamageComponent
 {
     public float Damage => 10f;
 
+    public void Initialize(Character selfCharacter)
+    {
+        //throw new System.NotImplementedException();
+    }
+
     public void MakeDamage(Character characterTarget)
     {
         if (characterTarget.LifeComponent != null)

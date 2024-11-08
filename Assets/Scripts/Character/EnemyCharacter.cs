@@ -7,14 +7,12 @@ public class EnemyCharacter : Character
 
     [SerializeField] private AIState currentState;
 
+    private Character selfCharacter;
+
     private float timeBetweenDamageCounter = 0;
 
     public override Character CharacterTarget => GameManager.Instance.CharacterFactory.Player;
-    public float distanceToTarget
-    {
-        get => Vector3.Distance(CharacterTarget.transform.position, characterData.transform.position);
 
-    }
 
     public override void Initialize()
     {
@@ -39,7 +37,7 @@ public class EnemyCharacter : Character
                 break;
 
             case AIState.MakingDamage:
-                if (distanceToTarget < 3 && timeBetweenDamageCounter <= 0)
+                if (Vector3.Distance(CharacterTarget.transform.position, characterData.transform.position) < 3 && timeBetweenDamageCounter <= 0)
                 {
                     DamageComponent.MakeDamage(CharacterTarget);
                     timeBetweenDamageCounter = characterData.TimeBetweenDamage;

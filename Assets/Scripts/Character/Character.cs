@@ -20,7 +20,7 @@ public abstract class Character : MonoBehaviour
     public virtual void Initialize()
     {
         MovableComponent = new CharacterMovementComponent();
-        
+        LifeComponent = new LifeComponent();
         MovableComponent.Initialize(characterData);
     }
     public abstract void Update();

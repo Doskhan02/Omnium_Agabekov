@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCharacter : Character
 {
+    private Character selfCharacter;
     public override Character CharacterTarget 
     { 
         get 
@@ -16,7 +17,7 @@ public class PlayerCharacter : Character
                 if (list[i].CharacterType == CharacterType.Player)
                     continue;
                 float distanceBetween = Vector3.Distance(list[i].transform.position, transform.position);
-                if (distanceBetween > minDistance)
+                if (distanceBetween < minDistance)
                 {
                     target = list[i];
                     minDistance = distanceBetween;
@@ -30,6 +31,7 @@ public class PlayerCharacter : Character
     {
         base.Initialize();
         LifeComponent = new LifeComponent();
+        DamageComponent = new CharacterDamageComponent();
     }
     public override void Update()
     {
@@ -48,8 +50,11 @@ public class PlayerCharacter : Character
             Vector3 rotationDirection = CharacterTarget.transform.position - transform.position;
             MovableComponent.Rotate(rotationDirection);
 
-            if(Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
+            {
                 DamageComponent.MakeDamage(CharacterTarget);
+            }
+                
         }
 
         MovableComponent.Move(movementVector);

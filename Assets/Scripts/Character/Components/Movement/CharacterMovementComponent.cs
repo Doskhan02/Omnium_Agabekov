@@ -43,4 +43,9 @@ public class CharacterMovementComponent : IMovable
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         float angle = Mathf.SmoothDampAngle(characterData.CharacterTransform.eulerAngles.y, targetAngle, ref smooth, smooth);
     }
+
+    public void Initialize(Character selfCharacter)
+    {
+        //throw new System.NotImplementedException();
+    }
 }
