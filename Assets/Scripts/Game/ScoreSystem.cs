@@ -20,6 +20,7 @@ public class ScoreSystem
         {
             MaxScore = Score;
             PlayerPrefs.SetInt(SAVE_NAME, MaxScore);
+            Debug.Log("Your score: " + MaxScore);
         }
     }
     public void AddScore(int earnedScore) 

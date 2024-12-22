@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
     [SerializeField] private CharacterFactory characterFactory;
+    [SerializeField] private WindowService windowService;
 
     private ScoreSystem scoreSystem;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public CharacterFactory CharacterFactory => characterFactory;
+    public WindowService WindowService => windowService;
 
     private void Awake()
     {
@@ -66,7 +68,7 @@ public class GameManager : MonoBehaviour
         gameSessionTime += Time.deltaTime;
         timeBetweenEnemySpawn -= Time.deltaTime;
 
-        
+                
         if (timeBetweenEnemySpawn <= 0)
         {
             SpawnEnemy();
@@ -123,7 +125,7 @@ public class GameManager : MonoBehaviour
         scoreSystem.EndGame();
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         Debug.Log("You Lost:(");
         isGameActive = false;
